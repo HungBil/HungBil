@@ -620,6 +620,19 @@
   TEXT SECTION (right side, x center ~652)
 ═══════════════════════════════════════════════════════ -->
 
+<!-- Crown over 'H' -->
+<g filter="url(#glow)">
+  <!-- Crown peaks -->
+  <polygon points="502,105 508,65 518,88 528,55 538,88 548,65 554,105" fill="url(#nameGrad)" stroke="#FFA000" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Crown base -->
+  <polygon points="500,105 556,105 552,112 504,112" fill="#FFD700" opacity="0.9"/>
+  <!-- Crown jewels -->
+  <circle cx="508" cy="65" r="3.5" fill="#FFD700" />
+  <circle cx="528" cy="55" r="4.5" fill="#FF4500" />
+  <circle cx="548" cy="65" r="3.5" fill="#FFD700" />
+  <circle cx="528" cy="55" r="2" fill="#FFFFFF" opacity="0.6"/>
+</g>
+
 <!-- Shadow echo -->
 <text x="655" y="174"
   font-family="Impact, 'Arial Black', Haettenschweiler, sans-serif"
@@ -658,7 +671,7 @@
 <text x="651" y="252"
   font-family="'Courier New', Courier, monospace"
   font-size="11" text-anchor="middle"
-  fill="#CC5500" opacity="0.8" letter-spacing="2.5">// FORGED IN CODE  ·  POWERED BY FIRE //</text>
+  fill="#CC5500" opacity="0.8" letter-spacing="2.5">// KING IN VIBE CODE  -  POWERED BY FIRE //</text>
 
 
 <!-- ═══════ AMBIENT SPARKS (background atmosphere) ═══════ -->
