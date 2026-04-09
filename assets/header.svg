@@ -623,14 +623,14 @@
 <!-- Crown over 'H' -->
 <g filter="url(#glow)">
   <!-- Crown peaks -->
-  <polygon points="502,105 508,65 518,88 528,55 538,88 548,65 554,105" fill="url(#nameGrad)" stroke="#FFA000" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="477,105 483,65 493,88 503,55 513,88 523,65 529,105" fill="url(#nameGrad)" stroke="#FFA000" stroke-width="1.5" stroke-linejoin="round"/>
   <!-- Crown base -->
-  <polygon points="500,105 556,105 552,112 504,112" fill="#FFD700" opacity="0.9"/>
+  <polygon points="475,105 531,105 527,112 479,112" fill="#FFD700" opacity="0.9"/>
   <!-- Crown jewels -->
-  <circle cx="508" cy="65" r="3.5" fill="#FFD700" />
-  <circle cx="528" cy="55" r="4.5" fill="#FF4500" />
-  <circle cx="548" cy="65" r="3.5" fill="#FFD700" />
-  <circle cx="528" cy="55" r="2" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="483" cy="65" r="3.5" fill="#FFD700" />
+  <circle cx="503" cy="55" r="4.5" fill="#FF4500" />
+  <circle cx="523" cy="65" r="3.5" fill="#FFD700" />
+  <circle cx="503" cy="55" r="2" fill="#FFFFFF" opacity="0.6"/>
 </g>
 
 <!-- Shadow echo -->
