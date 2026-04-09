@@ -1,66 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" width="900" height="300">
 <defs>
-  <!-- BG: near-black with dark-red center glow (radial, not smooth) -->
-  <radialGradient id="bgGlow" cx="30%" cy="55%" r="60%">
-    <stop offset="0%"  stop-color="#1C0200"/>
+
+  <radialGradient id="bgGlow" cx="28%" cy="55%" r="65%">
+    <stop offset="0%"  stop-color="#1E0200"/>
     <stop offset="50%" stop-color="#0A0100"/>
     <stop offset="100%" stop-color="#000000"/>
   </radialGradient>
 
-  <!-- Name text: hard stops yellow → orange → deep red -->
   <linearGradient id="nameGrad" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0%"   stop-color="#FFE500"/>
     <stop offset="40%"  stop-color="#FF6800"/>
     <stop offset="100%" stop-color="#AA0000"/>
   </linearGradient>
 
-  <!-- Horn gradient: gold tip, orange base -->
   <linearGradient id="hornGrad" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0%"   stop-color="#FFE000"/>
     <stop offset="100%" stop-color="#FF4400"/>
   </linearGradient>
 
-  <!-- Eye gradient: gold center → orange → dark red rim -->
   <radialGradient id="eyeGrad" cx="50%" cy="42%" r="50%">
     <stop offset="0%"   stop-color="#FFEE00"/>
     <stop offset="45%"  stop-color="#FF5500"/>
     <stop offset="100%" stop-color="#2A0000"/>
   </radialGradient>
 
-  <!-- Orange text glow -->
+  <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"   stop-color="#1E0000"/>
+    <stop offset="70%"  stop-color="#440000"/>
+    <stop offset="100%" stop-color="#2A0000"/>
+  </linearGradient>
+
   <filter id="textGlow" x="-20%" y="-30%" width="140%" height="160%">
     <feGaussianBlur stdDeviation="6" result="b"/>
     <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 
-  <!-- Standard glow (dragon outlines) -->
-  <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+  <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
     <feGaussianBlur stdDeviation="3.5" result="b"/>
     <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 
-  <!-- Fire orange aura filter -->
-  <filter id="fireAura" x="-30%" y="-30%" width="160%" height="160%">
-    <feGaussianBlur stdDeviation="7" result="b"/>
-    <feColorMatrix type="matrix"
-      values="3 1 0 0 0  0.5 0.1 0 0 0  0 0 0 0 0  0 0 0 1 0"
-      in="b" result="r"/>
-    <feMerge><feMergeNode in="r"/><feMergeNode in="SourceGraphic"/></feMerge>
+  <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="6" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 
-  <!-- Subtle scanline texture pattern -->
   <pattern id="scanlines" x="0" y="0" width="1" height="4" patternUnits="userSpaceOnUse">
-    <rect x="0" y="0" width="1" height="1" fill="#FF2200" opacity="0.04"/>
+    <rect x="0" y="0" width="1" height="1" fill="#FF2200" opacity="0.035"/>
   </pattern>
+
 </defs>
 
-<!-- ═══════════════════ BACKGROUND ═══════════════════ -->
+<!-- ═════════════ BACKGROUND ═════════════ -->
 <rect width="900" height="300" fill="#020000"/>
 <rect width="900" height="300" fill="url(#bgGlow)"/>
 <rect width="900" height="300" fill="url(#scanlines)"/>
-
-<!-- Subtle dark grid -->
-<g stroke="#1A0000" stroke-width="0.6" opacity="1">
+<g stroke="#180000" stroke-width="0.6">
   <line x1="0"   y1="75"  x2="900" y2="75"/>
   <line x1="0"   y1="150" x2="900" y2="150"/>
   <line x1="0"   y1="225" x2="900" y2="225"/>
@@ -73,20 +68,15 @@
   <line x1="788" y1="0"   x2="788" y2="300"/>
 </g>
 
-<!-- ═══════════════════ FRAME ═══════════════════ -->
-<!-- Outer amber border -->
+<!-- ═════════════ FRAME ═════════════ -->
 <rect x="2" y="2" width="896" height="296" fill="none" stroke="#882200" stroke-width="1.5" rx="6"/>
-<!-- Inner thin frame -->
 <rect x="5" y="5" width="890" height="290" fill="none" stroke="#FF4500" stroke-width="0.4" rx="5" opacity="0.35"/>
-
-<!-- Corner brackets - gold, hard-edged -->
 <g stroke="#FFD700" stroke-width="2.2" fill="none" filter="url(#glow)">
   <polyline points="2,36 2,2 36,2"/>
   <polyline points="864,2 898,2 898,36"/>
   <polyline points="2,264 2,298 36,298"/>
   <polyline points="864,298 898,298 898,264"/>
 </g>
-<!-- Corner accent dots -->
 <circle cx="2"   cy="2"   r="2.5" fill="#FFD700" opacity="0.7"/>
 <circle cx="898" cy="2"   r="2.5" fill="#FFD700" opacity="0.7"/>
 <circle cx="2"   cy="298" r="2.5" fill="#FFD700" opacity="0.7"/>
@@ -94,178 +84,331 @@
 
 
 <!-- ═══════════════════════════════════════════════════════
-     DRAGON MASCOT — Left side, x:0–330
-     Head facing RIGHT, 3/4 profile, breathing fire.
-     Silhouette built from stacked polygons.
+  FAR (SECOND) WING — behind body, glimpse of distant wing
+═══════════════════════════════════════════════════════ -->
+<polygon
+  points="142,212 95,128 108,114 152,205 148,218"
+  fill="#150000" opacity="0.9"/>
+<line x1="142" y1="212" x2="95"  y2="128" stroke="#2A0000" stroke-width="1.2"/>
+<line x1="148" y1="215" x2="108" y2="114" stroke="#2A0000" stroke-width="1"/>
+
+
+<!-- ═══════════════════════════════════════════════════════
+  MAIN WING — left side, large bat wing sweeping up
+═══════════════════════════════════════════════════════ -->
+<!-- Wing base membrane (darkest) -->
+<polygon
+  points="120,218 20,55 36,32 56,52 70,42 115,78 132,212"
+  fill="url(#wingGrad)"/>
+
+<!-- Membrane segments between finger bones (progressively lighter) -->
+<polygon points="120,218 78,140 20,55 28,46 78,128 118,212" fill="#320000" opacity="0.8"/>
+<polygon points="78,128 28,46 36,32 60,48 84,118"            fill="#3A0000" opacity="0.65"/>
+<polygon points="115,78 62,48 70,42 112,72"                  fill="#380000" opacity="0.5"/>
+
+<!-- Finger bone lines -->
+<g stroke="#4A0000" stroke-width="2" fill="none">
+  <line x1="120" y1="218" x2="20"  y2="55"/>
+  <line x1="122" y1="216" x2="36"  y2="32"/>
+  <line x1="126" y1="214" x2="58"  y2="44"/>
+  <line x1="130" y1="211" x2="115" y2="78"/>
+</g>
+
+<!-- Wing vein cross-lines -->
+<g stroke="#2E0000" stroke-width="0.9" opacity="0.7">
+  <line x1="82"  y1="142" x2="55"  y2="90"/>
+  <line x1="70"  y1="168" x2="44"  y2="108"/>
+  <line x1="58"  y1="192" x2="32"  y2="124"/>
+  <line x1="106" y1="120" x2="88"  y2="90"/>
+  <line x1="95"  y1="148" x2="76"  y2="115"/>
+</g>
+
+<!-- Wing edge bright-trim -->
+<line x1="20" y1="55" x2="36"  y2="32" stroke="#AA2200" stroke-width="1.5" opacity="0.6"/>
+<line x1="36" y1="32" x2="58"  y2="44" stroke="#882200" stroke-width="1.2" opacity="0.5"/>
+<line x1="58" y1="44" x2="115" y2="78" stroke="#661400" stroke-width="1"   opacity="0.4"/>
+
+<!-- Wing tip glows -->
+<circle cx="36" cy="32" r="4" fill="#FF3300" opacity="0.55" filter="url(#glow)">
+  <animate attributeName="opacity" values="0.55;1;0.55" dur="2.8s" repeatCount="indefinite"/>
+  <animate attributeName="r"       values="4;6;4"       dur="2.8s" repeatCount="indefinite"/>
+</circle>
+<circle cx="20" cy="55" r="2.5" fill="#FF4400" opacity="0.4" filter="url(#glow)">
+  <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.2s" repeatCount="indefinite"/>
+</circle>
+<circle cx="58" cy="44" r="2" fill="#FF5500" opacity="0.35" filter="url(#glow)">
+  <animate attributeName="opacity" values="0.35;0.7;0.35" dur="3.2s" repeatCount="indefinite"/>
+</circle>
+
+
+<!-- ═══════════════════════════════════════════════════════
+  MAIN BODY — full torso + tail silhouette 
+  Clockwise: spine side → tail tip → belly side → close
 ═══════════════════════════════════════════════════════ -->
 
-<!-- === WING / BACK CREST ( behind head, decorative ) === -->
-<!-- Large swept back-fin / wing shape -->
-<polygon points="90,55 55,12 42,18 75,62 68,95 88,90 100,72"
-  fill="#660000" opacity="0.7"/>
-<polygon points="88,60 58,18 50,22 78,65 72,90 88,85 98,70"
-  fill="#FF4400" opacity="0.25"/>
-
-<!-- === NECK / CHEST (background, darkest layer) === -->
+<!-- Outermost silhouette (darkest shadow layer) -->
 <polygon
-  points="42,300 70,278 94,255 112,234 126,214 136,196 143,178
-           143,185 136,202 124,222 108,244 88,267 64,292 42,300"
-  fill="#3A0000"/>
+  points="150,170 132,188 116,212 100,237 84,262 67,279 50,290 32,296
+          20,290 12,278 16,266 26,263 38,273 55,283 73,288
+          90,280 106,272 122,262 138,250 148,230 155,212 161,196 162,183"
+  fill="#3E0000"/>
+
+<!-- Body main surface (back/top side) -->
+<polygon
+  points="150,170 132,188 116,212 100,237 84,262 67,279 50,290 33,296
+          43,294 62,286 80,280 97,272 114,264 131,254 143,235 152,215 160,197 162,183"
+  fill="#620000"/>
+
+<!-- Belly surface (lower side, slightly brighter - reflects ambient fire) -->
+<polygon
+  points="162,183 158,200 151,220 141,244 128,264 110,276 90,282 68,288 46,294 33,296
+          43,294 60,288 78,282 96,274 112,265 129,255 141,237 151,215 159,198"
+  fill="#7A0800" opacity="0.85"/>
+
+
+<!-- ═════════ TAIL TIP (separate pointed extension) ═════════ -->
+<polygon
+  points="32,296 20,290 12,278 16,266 26,263 34,272 38,280 44,288 52,292 38,296"
+  fill="#500000"/>
+<!-- Tail narrow highlight -->
+<polygon
+  points="12,278 16,266 22,264 28,270 20,280"
+  fill="#880000" opacity="0.5"/>
+<!-- Tail diamond-tip spike -->
+<polygon
+  points="12,278 5,272 9,264 14,268"
+  fill="#FF4500" opacity="0.5" filter="url(#softGlow)"/>
+<!-- Tail tip glow pulse -->
+<circle cx="10" cy="272" r="4" fill="#FF4500" opacity="0.25" filter="url(#glow)">
+  <animate attributeName="opacity" values="0.25;0.55;0.25" dur="2.5s" repeatCount="indefinite"/>
+  <animate attributeName="r"       values="4;7;4"           dur="2.5s" repeatCount="indefinite"/>
+</circle>
+
+
+<!-- ═════════ SPINE RIDGE SPIKES ═════════ -->
+<!-- Dorsal spikes along top of body, each perpendicular to spine -->
+<g fill="#CC2000" opacity="0.9">
+  <polygon points="140,185 148,172 146,188"/>
+  <polygon points="126,206 134,193 132,209"/>
+  <polygon points="112,230 120,216 118,232"/>
+  <polygon points="97,255  106,241 103,257"/>
+  <polygon points="82,272  92,258  88,274"/>
+  <polygon points="65,283  75,270  71,285"/>
+</g>
+<!-- Spine edge line -->
+<polyline
+  points="147,170 130,188 114,212 98,237 82,262 66,279 48,290 30,295"
+  stroke="#2E0000" stroke-width="2.2" fill="none"/>
+
+
+<!-- ═════════ BELLY SCALE PLATES ═════════ -->
+<g fill="#8A1000" opacity="0.65">
+  <polygon points="156,202 149,218 154,224 162,208"/>
+  <polygon points="148,220 140,238 145,244 153,226"/>
+  <polygon points="139,240 129,260 135,265 144,246"/>
+  <polygon points="128,262 116,274 122,280 134,267"/>
+  <polygon points="114,275 100,283 106,288 118,280"/>
+  <polygon points="98,284  84,290  90,294 102,289"/>
+  <polygon points="83,290  66,294  72,298  86,294"/>
+</g>
+
+<!-- Scale texture along belly flank -->
+<g fill="#660000" opacity="0.4">
+  <polygon points="152,210 156,204 160,210 156,216"/>
+  <polygon points="143,228 147,222 151,228 147,234"/>
+  <polygon points="133,250 137,244 141,250 137,256"/>
+  <polygon points="120,268 124,262 128,268 124,274"/>
+  <polygon points="104,278 108,272 112,278 108,284"/>
+</g>
+
+
+<!-- ═══════════════════════════════════════════════════════
+  NECK / CHEST TRANSITION from body to head
+═══════════════════════════════════════════════════════ -->
+<polygon
+  points="42,300 68,278 92,256 110,236 126,216 138,198 148,180 148,170
+          145,178 138,196 126,214 108,235 90,257 65,280 38,300"
+  fill="#3E0000"/>
+<polygon
+  points="148,170 142,182 135,200 126,218 112,237 96,258 76,278"
+  fill="#6E0000" opacity="0.7"/>
 <!-- Neck scale lines -->
-<line x1="91"  y1="262" x2="110" y2="250" stroke="#220000" stroke-width="2.5"/>
-<line x1="107" y1="248" x2="124" y2="234" stroke="#220000" stroke-width="2"/>
-<line x1="121" y1="232" x2="134" y2="218" stroke="#220000" stroke-width="1.8"/>
-<line x1="132" y1="217" x2="141" y2="203" stroke="#220000" stroke-width="1.5"/>
+<g stroke="#2E0000" stroke-width="1.8" fill="none">
+  <line x1="92"  y1="260" x2="110" y2="248"/>
+  <line x1="107" y1="246" x2="123" y2="234"/>
+  <line x1="120" y1="232" x2="134" y2="218"/>
+  <line x1="132" y1="215" x2="142" y2="201"/>
+</g>
 
-<!-- === MAIN CRANIUM (core head shape) === -->
+
+<!-- ═══════════════════════════════════════════════════════
+  FRONT LEG (right foreleg)
+═══════════════════════════════════════════════════════ -->
+<!-- Upper arm -->
+<polygon points="174,232 183,224 196,239 187,248" fill="#580000"/>
+<!-- Forearm -->
+<polygon points="186,248 195,240 208,262 199,270" fill="#4A0000"/>
+<!-- Hand/wrist -->
+<polygon points="199,270 206,264 218,276 222,283 208,283 198,278" fill="#580000"/>
+<!-- Claws (3) -->
+<g fill="#771000">
+  <polygon points="204,282 201,292 208,292 211,284"/>
+  <polygon points="211,281 208,292 215,290 217,283"/>
+  <polygon points="197,280 193,291 200,291 202,282"/>
+</g>
+<g fill="#BB1A00" opacity="0.7">
+  <polygon points="202,292 200,299 206,299 209,292"/>
+  <polygon points="209,291 207,298 213,297 215,291"/>
+  <polygon points="194,291 191,298 197,297 199,291"/>
+</g>
+
+
+<!-- ═══════════════════════════════════════════════════════
+  HIND LEG (left hind leg)
+═══════════════════════════════════════════════════════ -->
+<!-- Thigh -->
+<polygon points="102,268 114,262 117,278 106,282" fill="#480000"/>
+<!-- Lower leg -->
+<polygon points="106,282 116,278 118,292 108,296" fill="#3E0000"/>
+<!-- Foot -->
+<polygon points="107,296 116,290 127,297 118,300 107,300" fill="#480000"/>
+<!-- Hind claws -->
+<g fill="#661000">
+  <polygon points="108,300 106,300 104,306 109,306"/>
+  <polygon points="113,299 111,300 109,306 114,306"/>
+  <polygon points="119,298 117,300 115,305 120,305"/>
+  <polygon points="124,297 122,300 121,305 126,304"/>
+</g>
+
+
+<!-- ═══════════════════════════════════════════════════════
+  HEAD (same geometry, layered on top of body/wing)
+═══════════════════════════════════════════════════════ -->
+
+<!-- HEAD BODY (main cranium) -->
 <polygon
-  points="143,170 142,145 145,122 150,103 158,88 170,76
-           184,67 200,63 216,65 227,75 232,92 230,118
-           222,136 210,148 196,156 178,163 162,168 148,172"
+  points="143,170 142,145 145,122 150,103 158,88 170,76 184,67 200,63 216,65
+           227,75 232,92 230,118 222,136 210,148 196,156 178,163 162,168 148,172"
   fill="#7A0000"/>
 
-<!-- === FACE SURFACE (lighter red, forward-facing portion) === -->
+<!-- FACE SURFACE (forward-facing, lighter) -->
 <polygon
-  points="150,165 149,142 151,120 156,103 163,90 174,79
-           186,71 200,67 213,69 222,79 226,96 224,118
-           218,133 207,144 196,152 180,159 165,165"
+  points="150,165 149,142 151,120 156,103 163,90 174,79 186,71 200,67
+           213,69 222,79 226,96 224,118 218,133 207,144 196,152 180,159 165,165"
   fill="#AA1400"/>
 
-<!-- === BROW RIDGE (gives 3D depth) === -->
+<!-- BROW RIDGE -->
 <polygon
-  points="158,103 160,88 168,78 179,71 190,68 202,70 212,78
-           214,90 207,98 196,100 183,99 172,100 163,103"
+  points="158,103 160,88 168,78 179,71 190,68 202,70 212,78 214,90
+           207,98 196,100 183,99 172,100 163,103"
   fill="#CC2000" opacity="0.75"/>
 
-<!-- === UPPER JAW extending right === -->
-<!-- Jaw base -->
+<!-- UPPER JAW extending right -->
 <polygon
   points="218,133 234,122 258,114 285,116 311,130 316,144
            297,140 272,132 248,130 226,137 218,142"
   fill="#8B0F00"/>
-<!-- Jaw top surface (lighter) -->
 <polygon
   points="232,122 255,115 280,117 305,130 313,144
            300,138 274,130 250,128 234,136"
   fill="#BB1800" opacity="0.8"/>
-<!-- Snout ridge / nose bumps -->
+<!-- Nose bump -->
 <polygon points="298,125 309,136 318,148 310,147 300,134" fill="#660800"/>
-<!-- Sharp tip highlight -->
-<polygon points="307,138 316,148 308,148 298,140" fill="#FF3300" opacity="0.5"/>
+<polygon points="307,138 316,148 308,148 298,140"         fill="#FF3300" opacity="0.5"/>
 
-<!-- === LOWER JAW === -->
+<!-- LOWER JAW -->
 <polygon
   points="220,158 238,168 263,176 290,172 315,158 316,148
            296,154 268,162 240,165 222,160"
   fill="#660A00"/>
-<!-- Lower jaw underside -->
 <polygon
   points="241,168 265,177 292,173 315,160 315,165 291,178 262,182 238,175"
   fill="#3D0600"/>
 
-<!-- === TEETH at the mouth gap === -->
-<!-- Upper teeth (hang down from upper jaw) -->
-<polygon points="245,128 249,137 253,128" fill="#FFCCAA"/>
-<polygon points="259,121 263,130 267,121" fill="#FFCCAA"/>
-<polygon points="274,121 278,130 282,121" fill="#FFCCAA"/>
-<polygon points="288,124 292,133 296,124" fill="#FFDDBB"/>
-<!-- Lower teeth (point up from lower jaw) -->
-<polygon points="248,163 252,154 256,163" fill="#FFCCAA" opacity="0.9"/>
-<polygon points="263,168 267,159 271,168" fill="#FFCCAA" opacity="0.9"/>
-<polygon points="278,167 282,158 286,167" fill="#FFCCAA" opacity="0.9"/>
+<!-- TEETH upper -->
+<g fill="#FFCCAA">
+  <polygon points="245,128 249,137 253,128"/>
+  <polygon points="259,121 263,130 267,121"/>
+  <polygon points="274,121 278,130 282,121"/>
+  <polygon points="288,124 292,133 296,124"/>
+</g>
+<!-- TEETH lower -->
+<g fill="#FFCCAA" opacity="0.9">
+  <polygon points="248,163 252,154 256,163"/>
+  <polygon points="263,168 267,159 271,168"/>
+  <polygon points="278,167 282,158 286,167"/>
+</g>
 
-<!-- === HORNS === -->
-<!-- HORN 1 — main long horn sweeping up-back -->
-<!-- Shadow body -->
-<polygon points="174,80 163,48 149,16 156,12 168,44 178,76" fill="#CC5500" opacity="0.6"/>
-<!-- Main body -->
-<polygon points="173,80 161,46 148,13 153,10 166,42 177,76" fill="url(#hornGrad)"/>
-<!-- Shine edge -->
+<!-- HORNS -->
+<!-- Horn 1 - main -->
+<polygon points="174,80 163,48 149,16 156,12 168,44 178,76" fill="url(#hornGrad)"/>
 <polygon points="167,70 157,40 150,13 153,10 160,38 165,66" fill="#FFE800" opacity="0.55"/>
-<!-- Tip glow pulse -->
 <circle cx="150" cy="11" r="5" fill="#FFD700" opacity="0.7" filter="url(#glow)">
-  <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
-  <animate attributeName="r"       values="5;7;5"     dur="2s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="0.7;1;0.7"   dur="2s"   repeatCount="indefinite"/>
+  <animate attributeName="r"       values="5;7;5"        dur="2s"   repeatCount="indefinite"/>
 </circle>
-
-<!-- HORN 2 — secondary, shorter -->
-<polygon points="196,72 190,50 181,30 186,27 194,47 200,68" fill="#FF6C00"/>
-<polygon points="194,68 188,48 182,30 185,27 190,44 196,64" fill="#FFCC00" opacity="0.5"/>
-<!-- Tip glow -->
+<!-- Horn 2 - secondary -->
+<polygon points="196,72 190,50 181,30 186,27 194,47 200,68"  fill="#FF6C00"/>
+<polygon points="194,68 188,48 182,30 185,27 190,44 196,64"  fill="#FFCC00" opacity="0.5"/>
 <circle cx="182" cy="28" r="3" fill="#FFD700" opacity="0.6" filter="url(#glow)">
   <animate attributeName="opacity" values="0.6;0.9;0.6" dur="1.6s" repeatCount="indefinite"/>
 </circle>
-
-<!-- Small ridge spike (near temple/ear) -->
+<!-- Ridge spike near temple -->
 <polygon points="214,76 211,60 220,58 220,74" fill="#FF5500" opacity="0.8"/>
-<polygon points="213,74 210,62 218,60 219,72" fill="#FFB800" opacity="0.4"/>
 
-<!-- FIRE CROWN — animated flame wisps above the horn base (dramatic effect) -->
-<g opacity="0.7">
+<!-- FIRE CROWN (animated flame wisps above horns) -->
+<g>
   <ellipse cx="160" cy="62" rx="8" ry="20" fill="#FF4500" transform="rotate(-15,160,62)">
-    <animate attributeName="ry"      values="20;24;19;22;20" dur="0.9s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.7;0.4;0.8;0.5;0.7" dur="0.9s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="20;25;18;23;20" dur="0.9s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.4;0.85;0.5;0.7" dur="0.9s" repeatCount="indefinite"/>
   </ellipse>
-  <ellipse cx="175" cy="52" rx="6" ry="16" fill="#FFB300" transform="rotate(-8,175,52)">
-    <animate attributeName="ry"      values="16;20;15;18;16" dur="0.7s" repeatCount="indefinite"/>
+  <ellipse cx="175" cy="53" rx="6" ry="16" fill="#FFB300" transform="rotate(-8,175,53)">
+    <animate attributeName="ry" values="16;21;14;18;16" dur="0.7s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.6;0.9;0.5;0.7;0.6" dur="0.7s" repeatCount="indefinite"/>
   </ellipse>
   <ellipse cx="148" cy="58" rx="5" ry="14" fill="#FF6B00" transform="rotate(-20,148,58)">
-    <animate attributeName="ry"      values="14;18;12;16;14" dur="1.1s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="14;19;12;17;14" dur="1.1s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.5;0.8;0.4;0.7;0.5" dur="1.1s" repeatCount="indefinite"/>
   </ellipse>
 </g>
 
-<!-- === EYE === -->
-<!-- Eye socket dark pit -->
-<ellipse cx="200" cy="114" rx="17" ry="15" fill="#10000A"/>
-<!-- Outer eye aura (pulsing) -->
+<!-- EYE -->
+<ellipse cx="200" cy="114" rx="17" ry="15" fill="#0E0008"/>
 <ellipse cx="200" cy="114" rx="22" ry="19" fill="#FF3D00" opacity="0.2">
   <animate attributeName="opacity" values="0.2;0.45;0.2" dur="2.2s" repeatCount="indefinite"/>
   <animate attributeName="rx"      values="22;26;22"     dur="2.2s" repeatCount="indefinite"/>
   <animate attributeName="ry"      values="19;23;19"     dur="2.2s" repeatCount="indefinite"/>
 </ellipse>
-<!-- Iris (gold-orange-red radial) -->
 <ellipse cx="200" cy="114" rx="13" ry="11" fill="url(#eyeGrad)"/>
-<!-- Dragon slit pupil (vertical) -->
 <ellipse cx="200" cy="114" rx="3.5" ry="9.5" fill="#000000"/>
-<!-- Blood-red inner pupil shimmer -->
 <ellipse cx="200" cy="114" rx="2"   ry="7"   fill="#CC0000" opacity="0.4"/>
-<!-- Eye specular highlights -->
-<circle cx="205" cy="108" r="2.8" fill="#FFFFFF" opacity="0.95"/>
-<circle cx="196" cy="118" r="1.5" fill="#FFFFFF" opacity="0.4"/>
+<circle  cx="205" cy="108" r="2.8" fill="#FFFFFF" opacity="0.95"/>
+<circle  cx="196" cy="118" r="1.5" fill="#FFFFFF" opacity="0.4"/>
 
-<!-- === SCALES TEXTURE (diamond scales pattern on face) === -->
+<!-- FACE SCALES -->
 <g fill="#660000" opacity="0.55">
-  <!-- Row 1, below eye -->
   <polygon points="174,135 179,129 185,135 180,141"/>
   <polygon points="186,138 191,132 197,138 192,144"/>
   <polygon points="198,140 203,134 209,140 204,146"/>
-  <!-- Row 2 -->
   <polygon points="168,128 173,122 179,128 174,134"/>
   <polygon points="180,130 185,124 191,130 186,136"/>
-  <!-- Row 3 (larger, on cheek area) -->
   <polygon points="166,118 172,112 178,118 172,124"/>
   <polygon points="178,120 184,114 190,120 184,126"/>
 </g>
-
-<!-- Snout scales (tiny, near tip) -->
 <g fill="#770A00" opacity="0.4">
   <polygon points="248,126 252,121 256,126 252,131"/>
   <polygon points="262,120 266,115 270,120 266,125"/>
   <polygon points="276,121 280,116 284,121 280,126"/>
 </g>
 
-<!-- ═══════════════════ FIRE BREATH ═══════════════════ -->
-<!-- Mouth opening at approx (314,148), fire streams RIGHT toward text -->
 
-<!-- Outer haze (widest, dimmest) -->
+<!-- ═══════════════════════════════════════════════════════
+  FIRE BREATH — from mouth (316,148) streaming right
+═══════════════════════════════════════════════════════ -->
 <ellipse cx="430" cy="145" rx="128" ry="38" fill="#FF2A00" opacity="0.18">
-  <animate attributeName="rx"      values="128;122;135;126;128" dur="0.55s" repeatCount="indefinite"/>
-  <animate attributeName="opacity" values="0.18;0.08;0.22;0.12;0.18" dur="0.55s" repeatCount="indefinite"/>
+  <animate attributeName="rx"      values="128;122;135;126;128"           dur="0.55s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="0.18;0.08;0.22;0.12;0.18"      dur="0.55s" repeatCount="indefinite"/>
 </ellipse>
-
-<!-- Layer 1 — main orange fire mass -->
 <polygon
   points="316,148 330,132 358,122 392,120 424,128 448,143 445,153 420,164 386,172 350,172 325,164"
   fill="#FF3D00" opacity="0.88">
@@ -276,8 +419,6 @@
     dur="0.38s" repeatCount="indefinite"/>
   <animate attributeName="opacity" values="0.88;0.62;0.88" dur="0.38s" repeatCount="indefinite"/>
 </polygon>
-
-<!-- Layer 2 — brighter amber core -->
 <polygon
   points="316,148 332,136 358,128 388,126 416,134 436,148 433,156 410,166 380,170 350,168 330,160"
   fill="#FF8C00" opacity="0.82">
@@ -287,126 +428,252 @@
             316,148 332,136 358,128 388,126 416,134 436,148 433,156 410,166 380,170 350,168 330,160"
     dur="0.32s" repeatCount="indefinite"/>
 </polygon>
-
-<!-- Layer 3 — gold-yellow inner core -->
 <polygon
   points="316,148 334,140 360,134 386,134 408,140 424,148 422,154 404,162 378,166 352,164 332,156"
   fill="#FFD100" opacity="0.72">
   <animate attributeName="opacity" values="0.72;0.45;0.72" dur="0.28s" repeatCount="indefinite"/>
-  <animate attributeName="points"
-    values="316,148 334,140 360,134 386,134 408,140 424,148 422,154 404,162 378,166 352,164 332,156;
-            316,148 338,138 364,132 390,132 412,139 427,148 425,155 407,163 380,167 354,165 334,157;
-            316,148 334,140 360,134 386,134 408,140 424,148 422,154 404,162 378,166 352,164 332,156"
-    dur="0.28s" repeatCount="indefinite"/>
 </polygon>
-
-<!-- Layer 4 — white-hot center (near mouth) -->
 <polygon
   points="316,148 330,144 352,141 372,141 388,145 398,148 395,152 378,157 355,157 332,153"
   fill="#FFFFFF" opacity="0.55">
   <animate attributeName="opacity" values="0.55;0.28;0.55" dur="0.22s" repeatCount="indefinite"/>
 </polygon>
 
-<!-- === EMBERS / SPARKS drifting up from fire === -->
+<!-- EMBERS from fire breath -->
 <g>
   <circle cx="352" cy="134" r="2.8" fill="#FFD700">
-    <animate attributeName="cy"      values="120;100;82"  dur="1.3s" begin="0s"    repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="1;0.6;0"     dur="1.3s" begin="0s"    repeatCount="indefinite"/>
-    <animate attributeName="r"       values="2.8;1.5;0.3" dur="1.3s" begin="0s"    repeatCount="indefinite"/>
+    <animate attributeName="cy" values="120;100;82" dur="1.3s"  begin="0s"    repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.6;0"   dur="1.3s"  begin="0s"    repeatCount="indefinite"/>
+    <animate attributeName="r"       values="2.8;1.5;0.3" dur="1.3s"  begin="0s"    repeatCount="indefinite"/>
   </circle>
   <circle cx="375" cy="125" r="2.2" fill="#FF7700">
-    <animate attributeName="cy"      values="118;96;78"   dur="1.6s" begin="0.2s"  repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.9;0.4;0"   dur="1.6s" begin="0.2s"  repeatCount="indefinite"/>
-    <animate attributeName="r"       values="2.2;1.2;0"   dur="1.6s" begin="0.2s"  repeatCount="indefinite"/>
+    <animate attributeName="cy"      values="118;96;78" dur="1.6s"  begin="0.2s"  repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.9;0.4;0" dur="1.6s"  begin="0.2s"  repeatCount="indefinite"/>
+    <animate attributeName="r"       values="2.2;1.2;0" dur="1.6s"  begin="0.2s"  repeatCount="indefinite"/>
   </circle>
   <circle cx="398" cy="122" r="3.2" fill="#FF9500">
-    <animate attributeName="cy"      values="120;100;85"  dur="0.95s" begin="0.4s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="1;0.5;0"     dur="0.95s" begin="0.4s" repeatCount="indefinite"/>
-    <animate attributeName="r"       values="3.2;1.8;0.2" dur="0.95s" begin="0.4s" repeatCount="indefinite"/>
+    <animate attributeName="cy"      values="120;100;85"  dur="0.95s" begin="0.4s"  repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.5;0"     dur="0.95s" begin="0.4s"  repeatCount="indefinite"/>
+    <animate attributeName="r"       values="3.2;1.8;0.2" dur="0.95s" begin="0.4s"  repeatCount="indefinite"/>
   </circle>
-  <circle cx="342" cy="130" r="2" fill="#FFEE00">
-    <animate attributeName="cy"      values="125;108;94"  dur="1.45s" begin="0.1s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.8;0.35;0"  dur="1.45s" begin="0.1s" repeatCount="indefinite"/>
+  <circle cx="342" cy="130" r="2"   fill="#FFEE00">
+    <animate attributeName="cy"      values="125;108;94" dur="1.45s" begin="0.1s"  repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0.35;0" dur="1.45s" begin="0.1s"  repeatCount="indefinite"/>
   </circle>
   <circle cx="415" cy="126" r="2.5" fill="#FF4400">
-    <animate attributeName="cy"      values="122;105;90"  dur="1.1s"  begin="0.55s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.9;0.4;0"   dur="1.1s"  begin="0.55s" repeatCount="indefinite"/>
-    <animate attributeName="r"       values="2.5;1.2;0"   dur="1.1s"  begin="0.55s" repeatCount="indefinite"/>
+    <animate attributeName="cy"      values="122;105;90" dur="1.1s"  begin="0.55s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.9;0.4;0"  dur="1.1s"  begin="0.55s" repeatCount="indefinite"/>
+    <animate attributeName="r"       values="2.5;1.2;0"  dur="1.1s"  begin="0.55s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="430" cy="132" r="2" fill="#FFD700">
-    <animate attributeName="cy"      values="128;112;98"  dur="1.7s"  begin="0.3s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.7;0.3;0"   dur="1.7s"  begin="0.3s" repeatCount="indefinite"/>
+  <circle cx="430" cy="132" r="2"   fill="#FFD700">
+    <animate attributeName="cy"      values="128;112;98" dur="1.7s"  begin="0.3s"  repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.3;0"  dur="1.7s"  begin="0.3s"  repeatCount="indefinite"/>
   </circle>
-  <!-- Lower embers drifting down -->
   <circle cx="366" cy="168" r="1.8" fill="#FF3300">
-    <animate attributeName="cy"      values="168;182;195" dur="1.25s" begin="0s"   repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.6;0.2;0"   dur="1.25s" begin="0s"   repeatCount="indefinite"/>
+    <animate attributeName="cy"      values="168;182;195" dur="1.25s" begin="0s"    repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.2;0"   dur="1.25s" begin="0s"    repeatCount="indefinite"/>
   </circle>
-  <circle cx="390" cy="172" r="2" fill="#FF6600">
+  <circle cx="390" cy="172" r="2"   fill="#FF6600">
     <animate attributeName="cy"      values="172;188;202" dur="1.55s" begin="0.35s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.5;0.2;0"   dur="1.55s" begin="0.35s" repeatCount="indefinite"/>
   </circle>
 </g>
 
 
+<!-- ═══════════════════════════════════════════════════════════════════
+  MINI DRAGON 1 — Center-upper area, facing RIGHT, medium sized
+  Body ~50px long, wings ±24px, total ~115px wide
+  Flies: x=460→575, y oscillates ~39–50
+═══════════════════════════════════════════════════════════════════════ -->
+<g>
+  <!-- Body -->
+  <polygon points="-24,-5 -8,-8 14,-6 24,0 14,6 -8,8 -24,5" fill="#CC2200" opacity="0.92"/>
+  <!-- Head -->
+  <polygon points="14,-6 26,0 14,6 10,5 8,-5" fill="#FF4500"/>
+  <!-- Snout -->
+  <polygon points="24,-3 34,0 24,3" fill="#FF7700"/>
+  <!-- Eye -->
+  <circle cx="20" cy="0" r="2.2" fill="#FFD700"/>
+  <circle cx="20" cy="0" r="1"   fill="#110000"/>
+  <!-- Horn -->
+  <polygon points="17,-6 14,-14 20,-5" fill="#FFD700"/>
+  <!-- Tiny fang -->
+  <polygon points="20,4 24,8 26,3" fill="#FFCCAA" opacity="0.8"/>
+  <!-- Upper wing (flaps UP then DOWN) -->
+  <polygon points="-6,-8 7,-25 17,-7" fill="#9A1500">
+    <animate attributeName="points"
+      values="-6,-8 7,-25 17,-7; -6,-8 7,-10 17,-7; -6,-8 7,-25 17,-7"
+      dur="0.44s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#9A1500;#661000;#9A1500" dur="0.44s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Lower wing (opposite phase) -->
+  <polygon points="-6,8 7,10 17,7" fill="#6A0F00">
+    <animate attributeName="points"
+      values="-6,8 7,10 17,7; -6,8 7,26 17,7; -6,8 7,10 17,7"
+      dur="0.44s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#6A0F00;#991500;#6A0F00" dur="0.44s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Tail -->
+  <polygon points="-24,0 -24,-4 -44,0 -24,4" fill="#CC2200"/>
+  <!-- Tail diamond tip -->
+  <polygon points="-44,0 -50,-3 -56,0 -50,3" fill="#FF4500"/>
+  <!-- Tiny fire trail from tail -->
+  <ellipse cx="-52" cy="0" rx="7" ry="3" fill="#FF5500" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.5s" repeatCount="indefinite"/>
+    <animate attributeName="rx"      values="7;5;7"        dur="0.5s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- Flight path: left ↔ right with vertical bobbing -->
+  <animateTransform attributeName="transform" type="translate"
+    values="460,46; 490,37; 520,43; 552,35; 578,43; 548,51; 516,46; 488,53; 460,46"
+    dur="5.2s" repeatCount="indefinite"/>
+</g>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+  MINI DRAGON 2 — Top-right area, facing LEFT (mirrored), slightly smaller
+  Flies: x=650→770, y oscillates ~28–44
+═══════════════════════════════════════════════════════════════════════ -->
+<g>
+  <!-- Body (mirrored: x negated) -->
+  <polygon points="24,-5 8,-8 -14,-6 -24,0 -14,6 8,8 24,5" fill="#AA1800" opacity="0.9"/>
+  <!-- Head (facing LEFT) -->
+  <polygon points="-14,-6 -26,0 -14,6 -10,5 -8,-5" fill="#FF4500"/>
+  <!-- Snout -->
+  <polygon points="-24,-3 -34,0 -24,3" fill="#FF7700"/>
+  <!-- Eye -->
+  <circle cx="-20" cy="0" r="2.2" fill="#FFD700"/>
+  <circle cx="-20" cy="0" r="1"   fill="#110000"/>
+  <!-- Horn (mirrored) -->
+  <polygon points="-17,-6 -14,-14 -20,-5" fill="#FFD700"/>
+  <!-- Fang -->
+  <polygon points="-20,4 -24,8 -26,3" fill="#FFCCAA" opacity="0.8"/>
+  <!-- Upper wing (flaps, different phase offset) -->
+  <polygon points="6,-8 -7,-25 -17,-7" fill="#881300">
+    <animate attributeName="points"
+      values="6,-8 -7,-25 -17,-7; 6,-8 -7,-10 -17,-7; 6,-8 -7,-25 -17,-7"
+      dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#881300;#550F00;#881300" dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Lower wing (opposite) -->
+  <polygon points="6,8 -7,10 -17,7" fill="#600D00">
+    <animate attributeName="points"
+      values="6,8 -7,10 -17,7; 6,8 -7,26 -17,7; 6,8 -7,10 -17,7"
+      dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#600D00;#881300;#600D00" dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Tail (now on RIGHT side since facing left) -->
+  <polygon points="24,0 24,-4 44,0 24,4" fill="#AA1800"/>
+  <polygon points="44,0 50,-3 56,0 50,3" fill="#FF4500"/>
+  <ellipse cx="52" cy="0" rx="7" ry="3" fill="#FF5500" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.5s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- Flight path: right ↔ left (opposite direction to dragon 1) -->
+  <animateTransform attributeName="transform" type="translate"
+    values="775,34; 744,27; 714,34; 684,28; 655,36; 684,44; 714,38; 744,45; 775,34"
+    dur="4.8s" begin="0.8s" repeatCount="indefinite"/>
+</g>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+  MINI DRAGON 3 — Bottom area, facing RIGHT, smallest (65% size)
+  Flies: x=648→795, y oscillates ~272–280 (below text)
+═══════════════════════════════════════════════════════════════════════ -->
+<g>
+  <!-- Body (smaller) -->
+  <polygon points="-16,-4 -5,-6 10,-4 16,0 10,4 -5,6 -16,4" fill="#991100" opacity="0.88"/>
+  <!-- Head -->
+  <polygon points="10,-4 18,0 10,4 7,3 5,-3" fill="#CC2200"/>
+  <!-- Snout -->
+  <polygon points="16,-2 22,0 16,2" fill="#FF5500"/>
+  <!-- Eye -->
+  <circle cx="14" cy="0" r="1.8" fill="#FFD700"/>
+  <circle cx="14" cy="0" r="0.8" fill="#110000"/>
+  <!-- Horn (small) -->
+  <polygon points="11,-4 9,-10 13,-4" fill="#FFD700"/>
+  <!-- Upper wing -->
+  <polygon points="-3,-6 5,-18 11,-5" fill="#6E0F00">
+    <animate attributeName="points"
+      values="-3,-6 5,-18 11,-5; -3,-6 5,-8 11,-5; -3,-6 5,-18 11,-5"
+      dur="0.4s" begin="0.25s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Lower wing (opposite) -->
+  <polygon points="-3,6 5,8 11,5" fill="#4E0A00">
+    <animate attributeName="points"
+      values="-3,6 5,8 11,5; -3,6 5,18 11,5; -3,6 5,8 11,5"
+      dur="0.4s" begin="0.25s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Tail -->
+  <polygon points="-16,0 -16,-3 -30,0 -16,3" fill="#991100"/>
+  <polygon points="-30,0 -35,-2 -40,0 -35,2" fill="#FF5500"/>
+  <!-- Fire trail -->
+  <ellipse cx="-37" cy="0" rx="5" ry="2" fill="#FF5500" opacity="0.25">
+    <animate attributeName="opacity" values="0.25;0.5;0.25" dur="0.45s" repeatCount="indefinite"/>
+  </ellipse>
+  <!-- Flight path: slow sweep across the bottom strip, y=274±6 -->
+  <animateTransform attributeName="transform" type="translate"
+    values="650,275; 688,268; 728,274; 768,269; 800,275; 770,281; 730,276; 690,281; 650,275"
+    dur="6.5s" begin="0.4s" repeatCount="indefinite"/>
+</g>
+
+
 <!-- ═══════════════════════════════════════════════════════
-     TEXT SECTION — Right side (x: ~460 center: ~650)
+  TEXT SECTION (right side, x center ~652)
 ═══════════════════════════════════════════════════════ -->
 
-<!-- Name echo layer (depth shadow) -->
-<text x="656" y="174"
+<!-- Shadow echo -->
+<text x="655" y="174"
   font-family="Impact, 'Arial Black', Haettenschweiler, sans-serif"
   font-size="90" font-weight="900" text-anchor="middle"
   fill="#7A0000" opacity="0.55">HungBil</text>
 
-<!-- Main name — fire gradient, orange glow -->
-<text x="652" y="170"
+<!-- Main name — fire gradient with glow -->
+<text x="651" y="170"
   font-family="Impact, 'Arial Black', Haettenschweiler, sans-serif"
   font-size="90" font-weight="900" text-anchor="middle"
   fill="url(#nameGrad)"
   filter="url(#textGlow)">HungBil</text>
 
-<!-- Name outline (crisp red edge) -->
-<text x="652" y="170"
+<!-- Crisp red outline -->
+<text x="651" y="170"
   font-family="Impact, 'Arial Black', Haettenschweiler, sans-serif"
   font-size="90" font-weight="900" text-anchor="middle"
   fill="none" stroke="#AA0000" stroke-width="2.5" opacity="0.7">HungBil</text>
 
-<!-- Horizontal separator after title -->
-<!-- Left half: orange -->
-<line x1="455" y1="185" x2="652" y2="185" stroke="#FF4500" stroke-width="1.8" opacity="0.8"/>
-<!-- Right half: gold -->
-<line x1="652" y1="185" x2="868" y2="185" stroke="#FFD700" stroke-width="1.8" opacity="0.8"/>
-<!-- Center accent dot -->
-<circle cx="652" cy="185" r="3" fill="#FFE000" opacity="0.9"/>
+<!-- Separator lines -->
+<line x1="455" y1="185" x2="651" y2="185" stroke="#FF4500" stroke-width="1.8" opacity="0.8"/>
+<line x1="651" y1="185" x2="868" y2="185" stroke="#FFD700" stroke-width="1.8" opacity="0.8"/>
+<circle cx="651" cy="185" r="3" fill="#FFE000" opacity="0.9"/>
 
 <!-- Subtitle -->
-<text x="652" y="218"
+<text x="651" y="218"
   font-family="'Courier New', Courier, monospace"
   font-size="15" text-anchor="middle"
   fill="#FFA500" letter-spacing="5">FULL-STACK  ▸  AI BUILDER</text>
 
-<!-- Decorative angle brackets around subtitle -->
+<!-- Angle brackets -->
 <text x="458" y="222" font-family="monospace" font-size="24" fill="#7A2200" opacity="0.7">⟨</text>
 <text x="836" y="222" font-family="monospace" font-size="24" fill="#7A2200" opacity="0.7">⟩</text>
 
 <!-- Tagline -->
-<text x="652" y="252"
+<text x="651" y="252"
   font-family="'Courier New', Courier, monospace"
   font-size="11" text-anchor="middle"
   fill="#CC5500" opacity="0.8" letter-spacing="2.5">// FORGED IN CODE  ·  POWERED BY FIRE //</text>
 
-<!-- Floating ambient sparks (far right, background atmosphere) -->
+
+<!-- ═══════ AMBIENT SPARKS (background atmosphere) ═══════ -->
 <circle cx="828" cy="52"  r="2"   fill="#FFD700"><animate attributeName="opacity" values="1;0;1"       dur="2.3s" repeatCount="indefinite"/></circle>
 <circle cx="865" cy="88"  r="1.5" fill="#FF6600"><animate attributeName="opacity" values="0.7;0;0.7"   dur="1.7s" repeatCount="indefinite"/></circle>
-<circle cx="845" cy="252" r="2"   fill="#FF4400"><animate attributeName="opacity" values="0.5;1;0.5"   dur="3.1s" repeatCount="indefinite"/></circle>
-<circle cx="800" cy="278" r="1.2" fill="#FFD700"><animate attributeName="opacity" values="1;0.2;1"     dur="2.8s" repeatCount="indefinite"/></circle>
 <circle cx="878" cy="182" r="1.8" fill="#FFA500"><animate attributeName="opacity" values="0.3;1;0.3"   dur="1.9s" repeatCount="indefinite"/></circle>
 <circle cx="812" cy="135" r="1"   fill="#FF9000"><animate attributeName="opacity" values="0.8;0.1;0.8" dur="2.5s" repeatCount="indefinite"/></circle>
 <circle cx="880" cy="240" r="1.5" fill="#FFD700"><animate attributeName="opacity" values="0;0.9;0"     dur="2.1s" repeatCount="indefinite"/></circle>
-<!-- Bottom-left atmosphere (near dragon tail) -->
-<circle cx="44"  cy="288" r="1.8" fill="#FF4500"><animate attributeName="opacity" values="0;0.8;0" dur="2.0s" repeatCount="indefinite"/></circle>
-<circle cx="68"  cy="268" r="2.2" fill="#FFD700"><animate attributeName="opacity" values="0;0.7;0" dur="2.7s" repeatCount="indefinite"/></circle>
-<circle cx="28"  cy="278" r="1.2" fill="#FF6600"><animate attributeName="opacity" values="0;1;0"   dur="1.8s" repeatCount="indefinite"/></circle>
+<circle cx="845" cy="268" r="1.2" fill="#FF4400"><animate attributeName="opacity" values="0.5;1;0.5"   dur="3.1s" repeatCount="indefinite"/></circle>
+<circle cx="44"  cy="288" r="1.8" fill="#FF4500"><animate attributeName="opacity" values="0;0.8;0"     dur="2.0s" repeatCount="indefinite"/></circle>
+<circle cx="68"  cy="270" r="2.2" fill="#FFD700"><animate attributeName="opacity" values="0;0.7;0"     dur="2.7s" repeatCount="indefinite"/></circle>
+<circle cx="28"  cy="280" r="1.2" fill="#FF6600"><animate attributeName="opacity" values="0;1;0"       dur="1.8s" repeatCount="indefinite"/></circle>
+<circle cx="462" cy="18"  r="1.5" fill="#FF8000"><animate attributeName="opacity" values="0.4;1;0.4"   dur="2.4s" repeatCount="indefinite"/></circle>
+<circle cx="612" cy="14"  r="1"   fill="#FFD700"><animate attributeName="opacity" values="0.6;0;0.6"   dur="3.0s" repeatCount="indefinite"/></circle>
+<circle cx="730" cy="12"  r="1.5" fill="#FF6600"><animate attributeName="opacity" values="0;0.8;0"     dur="2.2s" repeatCount="indefinite"/></circle>
+<circle cx="840" cy="18"  r="1"   fill="#FFD700"><animate attributeName="opacity" values="0.5;0;0.5"   dur="1.6s" repeatCount="indefinite"/></circle>
 
 </svg>
