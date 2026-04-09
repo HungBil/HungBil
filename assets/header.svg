@@ -82,13 +82,6 @@
 <circle cx="2"   cy="298" r="2.5" fill="#FFD700" opacity="0.7"/>
 <circle cx="898" cy="298" r="2.5" fill="#FFD700" opacity="0.7"/>
 
-<!-- ═════════════ SECRET MESSAGE (Behind Dragon) ═════════════ -->
-<g font-family="'Courier New', Courier, monospace" font-size="16" font-weight="bold" fill="#FF8C00" opacity="0.9" transform="translate(15, 150) rotate(-15)">
-  <text x="0" y="0">/* THIS DRAGON IS REAL</text>
-  <text x="0" y="22">   AND IT IS UGLY.</text>
-  <text x="0" y="44">   NOT A BAD DESIGN. */</text>
-</g>
-
 <!-- ═══════════════════════════════════════════════════════
   FAR (SECOND) WING — behind body, glimpse of distant wing
 ═══════════════════════════════════════════════════════ -->
@@ -633,6 +626,13 @@
   font-size="11" text-anchor="middle"
   fill="#CC5500" opacity="0.8" letter-spacing="2.5">// KING IN VIBE CODE  -  POWERED BY FIRE //</text>
 
+
+<!-- ═════════════ SECRET MESSAGE (Foreground) ═════════════ -->
+<g font-family="'Courier New', Courier, monospace" font-size="16" font-weight="bold" fill="#FF8C00" opacity="0.95" transform="translate(15, 150) rotate(-15)">
+  <text x="0" y="0">/* THIS DRAGON IS REAL</text>
+  <text x="0" y="22">   AND IT IS UGLY.</text>
+  <text x="0" y="44">   NOT A BAD DESIGN. */</text>
+</g>
 
 <!-- ═══════ AMBIENT SPARKS (background atmosphere) ═══════ -->
 <circle cx="828" cy="52"  r="2"   fill="#FFD700"><animate attributeName="opacity" values="1;0;1"       dur="2.3s" repeatCount="indefinite"/></circle>
