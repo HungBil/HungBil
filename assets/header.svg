@@ -481,138 +481,92 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════════
-  MINI DRAGON 1 — Center-upper area, facing RIGHT, medium sized
-  Body ~50px long, wings ±24px, total ~115px wide
-  Flies: x=460→575, y oscillates ~39–50
+  DYNAMIC WYVERN SWARM (Aerodynamic mini-dragons)
+  Using animateMotion with rotate="auto" for realistic flight banking.
 ═══════════════════════════════════════════════════════════════════════ -->
+<defs>
+  <style>
+    .wyvern-flyer:hover { filter: drop-shadow(0 0 10px #FF3300) brightness(1.5); cursor: crosshair; }
+  </style>
+  <!-- Base Wyvern facing RIGHT (+X) -->
+  <g id="wyvern_base" class="wyvern-flyer">
+    <!-- Tail -->
+    <path d="M 0,0 C -12,-2 -25,2 -35,-2 C -25,5 -10,3 0,4 Z" fill="#5A0000"/>
+    <polygon points="-35,-2 -45,-5 -40,1" fill="#FF3D00"/>
+    <polygon points="-35,-2 -41,-2 -39,2" fill="#FFB300"/>
+    
+    <!-- Far Wing (Darker, inner layer) -->
+    <path d="M 3,0 Q 5,-15 -5,-20 Q -2,-10 3,2 Z" fill="#3D0000">
+      <animate attributeName="d" 
+               values="M 3,0 Q 5,-15 -5,-20 Q -2,-10 3,2 Z; 
+                       M 3,0 Q 15,-2 -5,3 Q -2,-2 3,2 Z; 
+                       M 3,0 Q 5,-15 -5,-20 Q -2,-10 3,2 Z" 
+               dur="0.38s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Body & Neck -->
+    <path d="M -5,3 Q 5,8 14,2 Q 22,-4 25,-10 L 32,-7 L 27,1 Q 14,8 5,6 Z" fill="#990000"/>
+
+    <!-- Head & Snout -->
+    <polygon points="32,-7 38,-4 34,2 27,1" fill="#DD2C00"/>
+    <!-- Jaw -->
+    <polygon points="27,1 35,5 31,1" fill="#FF8C00"/>
+    <!-- Teeth -->
+    <polygon points="32,-1 34,1 32,1" fill="#FFF"/>
+
+    <!-- Swept Horns -->
+    <polygon points="28,-8 15,-18 22,-5" fill="#FFD700"/>
+    <!-- Eye glow -->
+    <circle cx="30" cy="-3" r="1.5" fill="#FFF" filter="url(#glow)"/>
+    
+    <!-- Near Wing (Brighter, front layer) -->
+    <path d="M 4,2 Q 15,-22 -10,-18 Q 0,-8 4,4 Z" fill="#D50000">
+      <animate attributeName="d" 
+               values="M 4,2 Q 15,-22 -10,-18 Q 0,-8 4,4 Z; 
+                       M 4,2 Q 25,12 -10,8 Q 0,4 4,4 Z; 
+                       M 4,2 Q 15,-22 -10,-18 Q 0,-8 4,4 Z" 
+               dur="0.38s" repeatCount="indefinite"/>
+    </path>
+    <!-- Near Wing Bone/Trim highlight -->
+    <path d="M 4,2 Q 15,-22 -10,-18" fill="none" stroke="#FF5252" stroke-width="1.2">
+      <animate attributeName="d" 
+               values="M 4,2 Q 15,-22 -10,-18; 
+                       M 4,2 Q 25,12 -10,8; 
+                       M 4,2 Q 15,-22 -10,-18" 
+               dur="0.38s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Ember trail -->
+    <circle cx="-42" cy="-2" r="2" fill="#FFB300">
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="1;3;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</defs>
+
+<!-- WYVERN 1: Mid altitude, left-to-right swoop -->
 <g>
-  <!-- Body -->
-  <polygon points="-24,-5 -8,-8 14,-6 24,0 14,6 -8,8 -24,5" fill="#CC2200" opacity="0.92"/>
-  <!-- Head -->
-  <polygon points="14,-6 26,0 14,6 10,5 8,-5" fill="#FF4500"/>
-  <!-- Snout -->
-  <polygon points="24,-3 34,0 24,3" fill="#FF7700"/>
-  <!-- Eye -->
-  <circle cx="20" cy="0" r="2.2" fill="#FFD700"/>
-  <circle cx="20" cy="0" r="1"   fill="#110000"/>
-  <!-- Horn -->
-  <polygon points="17,-6 14,-14 20,-5" fill="#FFD700"/>
-  <!-- Tiny fang -->
-  <polygon points="20,4 24,8 26,3" fill="#FFCCAA" opacity="0.8"/>
-  <!-- Upper wing (flaps UP then DOWN) -->
-  <polygon points="-6,-8 7,-25 17,-7" fill="#9A1500">
-    <animate attributeName="points"
-      values="-6,-8 7,-25 17,-7; -6,-8 7,-10 17,-7; -6,-8 7,-25 17,-7"
-      dur="0.44s" repeatCount="indefinite"/>
-    <animate attributeName="fill" values="#9A1500;#661000;#9A1500" dur="0.44s" repeatCount="indefinite"/>
-  </polygon>
-  <!-- Lower wing (opposite phase) -->
-  <polygon points="-6,8 7,10 17,7" fill="#6A0F00">
-    <animate attributeName="points"
-      values="-6,8 7,10 17,7; -6,8 7,26 17,7; -6,8 7,10 17,7"
-      dur="0.44s" repeatCount="indefinite"/>
-    <animate attributeName="fill" values="#6A0F00;#991500;#6A0F00" dur="0.44s" repeatCount="indefinite"/>
-  </polygon>
-  <!-- Tail -->
-  <polygon points="-24,0 -24,-4 -44,0 -24,4" fill="#CC2200"/>
-  <!-- Tail diamond tip -->
-  <polygon points="-44,0 -50,-3 -56,0 -50,3" fill="#FF4500"/>
-  <!-- Tiny fire trail from tail -->
-  <ellipse cx="-52" cy="0" rx="7" ry="3" fill="#FF5500" opacity="0.3">
-    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.5s" repeatCount="indefinite"/>
-    <animate attributeName="rx"      values="7;5;7"        dur="0.5s" repeatCount="indefinite"/>
-  </ellipse>
-  <!-- Flight path: left ↔ right with vertical bobbing -->
-  <animateTransform attributeName="transform" type="translate"
-    values="460,46; 490,37; 520,43; 552,35; 578,43; 548,51; 516,46; 488,53; 460,46"
-    dur="5.2s" repeatCount="indefinite"/>
+  <animateMotion path="M -100,120 C 100,220 200,280 350,180 C 500,80 600,-20 750,80 C 850,130 950,150 1000,120" dur="6.7s" begin="-1.2s" repeatCount="indefinite" rotate="auto"/>
+  <use href="#wyvern_base" transform="scale(0.85)"/>
 </g>
 
-
-<!-- ═══════════════════════════════════════════════════════════════════
-  MINI DRAGON 2 — Top-right area, facing LEFT (mirrored), slightly smaller
-  Flies: x=650→770, y oscillates ~28–44
-═══════════════════════════════════════════════════════════════════════ -->
+<!-- WYVERN 2: High altitude dive bomber, right-to-left -->
 <g>
-  <!-- Body (mirrored: x negated) -->
-  <polygon points="24,-5 8,-8 -14,-6 -24,0 -14,6 8,8 24,5" fill="#AA1800" opacity="0.9"/>
-  <!-- Head (facing LEFT) -->
-  <polygon points="-14,-6 -26,0 -14,6 -10,5 -8,-5" fill="#FF4500"/>
-  <!-- Snout -->
-  <polygon points="-24,-3 -34,0 -24,3" fill="#FF7700"/>
-  <!-- Eye -->
-  <circle cx="-20" cy="0" r="2.2" fill="#FFD700"/>
-  <circle cx="-20" cy="0" r="1"   fill="#110000"/>
-  <!-- Horn (mirrored) -->
-  <polygon points="-17,-6 -14,-14 -20,-5" fill="#FFD700"/>
-  <!-- Fang -->
-  <polygon points="-20,4 -24,8 -26,3" fill="#FFCCAA" opacity="0.8"/>
-  <!-- Upper wing (flaps, different phase offset) -->
-  <polygon points="6,-8 -7,-25 -17,-7" fill="#881300">
-    <animate attributeName="points"
-      values="6,-8 -7,-25 -17,-7; 6,-8 -7,-10 -17,-7; 6,-8 -7,-25 -17,-7"
-      dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
-    <animate attributeName="fill" values="#881300;#550F00;#881300" dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
-  </polygon>
-  <!-- Lower wing (opposite) -->
-  <polygon points="6,8 -7,10 -17,7" fill="#600D00">
-    <animate attributeName="points"
-      values="6,8 -7,10 -17,7; 6,8 -7,26 -17,7; 6,8 -7,10 -17,7"
-      dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
-    <animate attributeName="fill" values="#600D00;#881300;#600D00" dur="0.48s" begin="0.12s" repeatCount="indefinite"/>
-  </polygon>
-  <!-- Tail (now on RIGHT side since facing left) -->
-  <polygon points="24,0 24,-4 44,0 24,4" fill="#AA1800"/>
-  <polygon points="44,0 50,-3 56,0 50,3" fill="#FF4500"/>
-  <ellipse cx="52" cy="0" rx="7" ry="3" fill="#FF5500" opacity="0.3">
-    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.5s" repeatCount="indefinite"/>
-  </ellipse>
-  <!-- Flight path: right ↔ left (opposite direction to dragon 1) -->
-  <animateTransform attributeName="transform" type="translate"
-    values="775,34; 744,27; 714,34; 684,28; 655,36; 684,44; 714,38; 744,45; 775,34"
-    dur="4.8s" begin="0.8s" repeatCount="indefinite"/>
+  <animateMotion path="M 1000,50 C 800,250 700,280 500,180 C 350,100 200,80 -100,180" dur="5.3s" begin="-4.1s" repeatCount="indefinite" rotate="auto"/>
+  <!-- scale(1, -1) fixes the upside down orientation when moving left -->
+  <use href="#wyvern_base" transform="scale(0.75) scale(1, -1)"/>
 </g>
 
-
-<!-- ═══════════════════════════════════════════════════════════════════
-  MINI DRAGON 3 — Bottom area, facing RIGHT, smallest (65% size)
-  Flies: x=648→795, y oscillates ~272–280 (below text)
-═══════════════════════════════════════════════════════════════════════ -->
+<!-- WYVERN 3: Fast low altitude interceptor, right-to-left shooting up -->
 <g>
-  <!-- Body (smaller) -->
-  <polygon points="-16,-4 -5,-6 10,-4 16,0 10,4 -5,6 -16,4" fill="#991100" opacity="0.88"/>
-  <!-- Head -->
-  <polygon points="10,-4 18,0 10,4 7,3 5,-3" fill="#CC2200"/>
-  <!-- Snout -->
-  <polygon points="16,-2 22,0 16,2" fill="#FF5500"/>
-  <!-- Eye -->
-  <circle cx="14" cy="0" r="1.8" fill="#FFD700"/>
-  <circle cx="14" cy="0" r="0.8" fill="#110000"/>
-  <!-- Horn (small) -->
-  <polygon points="11,-4 9,-10 13,-4" fill="#FFD700"/>
-  <!-- Upper wing -->
-  <polygon points="-3,-6 5,-18 11,-5" fill="#6E0F00">
-    <animate attributeName="points"
-      values="-3,-6 5,-18 11,-5; -3,-6 5,-8 11,-5; -3,-6 5,-18 11,-5"
-      dur="0.4s" begin="0.25s" repeatCount="indefinite"/>
-  </polygon>
-  <!-- Lower wing (opposite) -->
-  <polygon points="-3,6 5,8 11,5" fill="#4E0A00">
-    <animate attributeName="points"
-      values="-3,6 5,8 11,5; -3,6 5,18 11,5; -3,6 5,8 11,5"
-      dur="0.4s" begin="0.25s" repeatCount="indefinite"/>
-  </polygon>
-  <!-- Tail -->
-  <polygon points="-16,0 -16,-3 -30,0 -16,3" fill="#991100"/>
-  <polygon points="-30,0 -35,-2 -40,0 -35,2" fill="#FF5500"/>
-  <!-- Fire trail -->
-  <ellipse cx="-37" cy="0" rx="5" ry="2" fill="#FF5500" opacity="0.25">
-    <animate attributeName="opacity" values="0.25;0.5;0.25" dur="0.45s" repeatCount="indefinite"/>
-  </ellipse>
-  <!-- Flight path: slow sweep across the bottom strip, y=274±6 -->
-  <animateTransform attributeName="transform" type="translate"
-    values="650,275; 688,268; 728,274; 768,269; 800,275; 770,281; 730,276; 690,281; 650,275"
-    dur="6.5s" begin="0.4s" repeatCount="indefinite"/>
+  <animateMotion path="M 1000,280 C 800,260 600,290 400,260 C 250,230 150,50 -50,-60" dur="4.1s" begin="-2.5s" repeatCount="indefinite" rotate="auto"/>
+  <use href="#wyvern_base" transform="scale(0.65) scale(1, -1)"/>
+</g>
+
+<!-- WYVERN 4: Big slow cruiser, left-to-right -->
+<g>
+  <animateMotion path="M -150,60 C 150,-20 350,180 550,150 C 750,120 850,20 1050,40" dur="8.9s" begin="-6.3s" repeatCount="indefinite" rotate="auto"/>
+  <use href="#wyvern_base" transform="scale(1.1)"/>
 </g>
 
 
