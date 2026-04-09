@@ -146,24 +146,24 @@
   Clockwise: spine side → tail tip → belly side → close
 ═══════════════════════════════════════════════════════ -->
 
-<!-- Outermost silhouette (darkest shadow layer) -->
+<!-- Outermost silhouette (shadow layer - wider) -->
 <polygon
-  points="150,170 132,188 116,212 100,237 84,262 67,279 50,290 32,296
-          20,290 12,278 16,266 26,263 38,273 55,283 73,288
-          90,280 106,272 122,262 138,250 148,230 155,212 161,196 162,183"
-  fill="#3E0000"/>
+  points="150,170 131,190 114,214 98,240 82,264 65,281 48,292 30,298
+          18,292 10,280 14,268 24,265 36,275 53,285 71,290
+          88,282 104,274 120,264 136,253 146,232 154,213 161,197 162,183"
+  fill="#580000"/>
 
-<!-- Body main surface (back/top side) -->
+<!-- Body main surface (back/top side - visible maroon) -->
 <polygon
-  points="150,170 132,188 116,212 100,237 84,262 67,279 50,290 33,296
-          43,294 62,286 80,280 97,272 114,264 131,254 143,235 152,215 160,197 162,183"
-  fill="#620000"/>
+  points="150,170 131,190 114,214 98,240 82,264 65,281 48,292 30,298
+          42,296 60,288 79,282 97,274 114,266 131,256 143,237 152,217 160,199 162,184"
+  fill="#8A0000"/>
 
-<!-- Belly surface (lower side, slightly brighter - reflects ambient fire) -->
+<!-- Belly surface (fire-lit underside - brighter) -->
 <polygon
-  points="162,183 158,200 151,220 141,244 128,264 110,276 90,282 68,288 46,294 33,296
-          43,294 60,288 78,282 96,274 112,265 129,255 141,237 151,215 159,198"
-  fill="#7A0800" opacity="0.85"/>
+  points="162,184 157,202 149,224 139,248 126,267 108,279 88,285 66,291 44,297 30,298
+          42,296 60,290 79,284 97,276 114,268 131,258 143,239 152,219 159,201"
+  fill="#A81000" opacity="0.9"/>
 
 
 <!-- ═════════ TAIL TIP (separate pointed extension) ═════════ -->
@@ -186,39 +186,39 @@
 
 
 <!-- ═════════ SPINE RIDGE SPIKES ═════════ -->
-<!-- Dorsal spikes along top of body, each perpendicular to spine -->
-<g fill="#CC2000" opacity="0.9">
-  <polygon points="140,185 148,172 146,188"/>
-  <polygon points="126,206 134,193 132,209"/>
-  <polygon points="112,230 120,216 118,232"/>
-  <polygon points="97,255  106,241 103,257"/>
-  <polygon points="82,272  92,258  88,274"/>
-  <polygon points="65,283  75,270  71,285"/>
+<!-- Bright dorsal spikes - high contrast against dark body -->
+<g filter="url(#glow)">
+  <polygon points="139,188 150,173 145,190" fill="#FF3300" opacity="0.9"/>
+  <polygon points="124,208 136,193 130,211" fill="#FF2800" opacity="0.85"/>
+  <polygon points="110,232 122,216 116,234" fill="#EE2200" opacity="0.85"/>
+  <polygon points="95,257  108,241 101,259" fill="#DD2000" opacity="0.8"/>
+  <polygon points="80,275  94,258  87,277" fill="#CC1A00" opacity="0.8"/>
+  <polygon points="63,285  78,270  70,287" fill="#BB1800" opacity="0.75"/>
 </g>
-<!-- Spine edge line -->
+<!-- Spine edge line (dark crease) -->
 <polyline
-  points="147,170 130,188 114,212 98,237 82,262 66,279 48,290 30,295"
-  stroke="#2E0000" stroke-width="2.2" fill="none"/>
+  points="147,170 129,190 113,214 97,240 81,265 64,282 46,292 28,298"
+  stroke="#200000" stroke-width="2.5" fill="none"/>
 
 
 <!-- ═════════ BELLY SCALE PLATES ═════════ -->
-<g fill="#8A1000" opacity="0.65">
-  <polygon points="156,202 149,218 154,224 162,208"/>
-  <polygon points="148,220 140,238 145,244 153,226"/>
-  <polygon points="139,240 129,260 135,265 144,246"/>
-  <polygon points="128,262 116,274 122,280 134,267"/>
-  <polygon points="114,275 100,283 106,288 118,280"/>
-  <polygon points="98,284  84,290  90,294 102,289"/>
-  <polygon points="83,290  66,294  72,298  86,294"/>
+<!-- Bright orange-red segmented belly scales -->
+<g fill="#C41800" opacity="0.75">
+  <polygon points="155,204 147,222 153,228 161,210"/>
+  <polygon points="146,223 138,242 144,248 152,229"/>
+  <polygon points="137,244 127,264 133,270 142,250"/>
+  <polygon points="126,266 114,278 120,284 131,271"/>
+  <polygon points="112,279 97,287  103,292 116,284"/>
+  <polygon points="96,288  80,294  86,298  100,293"/>
+  <polygon points="79,295  62,298  68,300  82,298"/>
 </g>
-
-<!-- Scale texture along belly flank -->
-<g fill="#660000" opacity="0.4">
-  <polygon points="152,210 156,204 160,210 156,216"/>
-  <polygon points="143,228 147,222 151,228 147,234"/>
-  <polygon points="133,250 137,244 141,250 137,256"/>
-  <polygon points="120,268 124,262 128,268 124,274"/>
-  <polygon points="104,278 108,272 112,278 108,284"/>
+<!-- Diamond scale highlights on belly -->
+<g fill="#E02200" opacity="0.45">
+  <polygon points="151,212 155,206 159,212 155,218"/>
+  <polygon points="141,231 145,225 149,231 145,237"/>
+  <polygon points="130,253 134,247 138,253 134,259"/>
+  <polygon points="118,270 122,264 126,270 122,276"/>
+  <polygon points="104,282 108,276 112,282 108,288"/>
 </g>
 
 
