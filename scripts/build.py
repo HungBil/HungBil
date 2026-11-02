@@ -221,7 +221,7 @@ def about():
         (True, "cat focus.txt"),
         (False, "AI Agents · AI Security · Full-Stack Web · AI Product"),
         (True, "ls ./building"),
-        (False, "ai-log-hook/  scamgraph-agents/  di-san-viet-nam/  ai-test/"),
+        (False, "openhunter-ai/  scamgraph-agents/  di-san-viet-nam/  ai-test/"),
         (True, "echo $MOTTO"),
         (False, "AI-assisted development — powered by fire."),
     ]
