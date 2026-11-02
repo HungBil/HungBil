@@ -1,4 +1,7 @@
-"""Builds the animated profile SVGs from assets/src.  Run: python scripts/build.py"""
+"""Builds the animated profile SVGs from assets/src.  Run: python scripts/build.py
+
+assets/src/dragon-fly.webp: Codex full-body dragon, spine-rigged along a flight loop (OpenCV).
+assets/src/fire.webp: WebGL fbm fire shader captured frame by frame."""
 import base64, random
 from pathlib import Path
 
@@ -77,17 +80,11 @@ def sparkle(x, y, s, begin, dur=2.6):
 def header():
     rng = random.Random(7)
     W, H = 1000, 340
-    # dragon image placement (1500x689 source)
-    ix, iy, iw, ih = -34, -20, 810, 372
-    mouth = (360, 142)
-
-    def fire_spawn(r):  # along the fire stream, mouth -> lower right
-        t = r.random() ** 0.8
-        return (mouth[0] + 20 + t * 400 + r.uniform(-10, 10),
-                mouth[1] + 10 + t * 120 + r.uniform(-28, 28))
-
     def floor_spawn(r):
         return (r.uniform(0, W), H + r.uniform(0, 10))
+
+    def sky_spawn(r):
+        return (r.uniform(20, W - 20), r.uniform(60, H))
 
     def text_spawn(r):
         return (r.uniform(560, 990), r.uniform(150, 330))
@@ -103,12 +100,10 @@ def header():
 .mono{{font-family:HBMono,Consolas,'Courier New',monospace;font-weight:600}}
 </style>
 <defs>
-  <image id="dragon" href="{b64('dragon.webp','image/webp')}" x="{ix}" y="{iy}" width="{iw}" height="{ih}"/>
   {WYVERN}
   <radialGradient id="bg" cx="30%" cy="48%" r="75%">
     <stop offset="0" stop-color="#2A0600"/><stop offset=".45" stop-color="#0E0200"/><stop offset="1" stop-color="#030000"/>
   </radialGradient>
-  <radialGradient id="mouthGlow"><stop offset="0" stop-color="#FFE08A" stop-opacity=".95"/><stop offset=".35" stop-color="#FF7A1F" stop-opacity=".45"/><stop offset="1" stop-color="#FF3300" stop-opacity="0"/></radialGradient>
   <radialGradient id="scrim" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#160200" stop-opacity=".78"/><stop offset=".7" stop-color="#1A0300" stop-opacity=".4"/><stop offset="1" stop-color="#1A0300" stop-opacity="0"/></radialGradient>
   <linearGradient id="nameFill" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0" stop-color="#FFF6C9"/><stop offset=".28" stop-color="{GOLD}"/><stop offset=".58" stop-color="{ORANGE}"/><stop offset="1" stop-color="#9A0E00"/>
@@ -118,17 +113,6 @@ def header():
     <animateTransform attributeName="gradientTransform" type="translate" values="420 0;1150 0;1150 0" keyTimes="0;.45;1" dur="5s" repeatCount="indefinite"/>
   </linearGradient>
   <linearGradient id="rule" x1="0" x2="1"><stop offset="0" stop-color="{ORANGE}" stop-opacity="0"/><stop offset=".5" stop-color="{GOLD}"/><stop offset="1" stop-color="{ORANGE}" stop-opacity="0"/></linearGradient>
-  <linearGradient id="bodyFade" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fff"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient>
-  <linearGradient id="fireFade" x1="0" x2="1"><stop offset=".44" stop-color="#fff" stop-opacity="0"/><stop offset=".56" stop-color="#fff"/><stop offset=".75" stop-color="#fff" stop-opacity=".8"/><stop offset=".97" stop-color="#fff" stop-opacity="0"/></linearGradient>
-  <mask id="mBody" maskUnits="userSpaceOnUse" x="0" y="0" width="{W}" height="{H}"><rect x="{ix}" y="0" width="{iw}" height="{H}" fill="url(#bodyFade)"/></mask>
-  <mask id="mFire" maskUnits="userSpaceOnUse" x="0" y="0" width="{W}" height="{H}"><rect x="{ix}" y="0" width="{iw}" height="{H}" fill="url(#fireFade)"/></mask>
-  <filter id="haze" x="0" y="0" width="{W}" height="{H}" filterUnits="userSpaceOnUse">
-    <feTurbulence type="fractalNoise" baseFrequency="0.011 0.04" numOctaves="2" seed="4" result="n">
-      <animate attributeName="baseFrequency" values="0.011 0.040;0.014 0.055;0.010 0.047;0.011 0.040" dur="2.4s" repeatCount="indefinite"/>
-    </feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-  <filter id="hot"><feColorMatrix type="matrix" values="1.35 .1 0 0 .03  .05 .9 0 0 0  0 0 .4 0 0  0 0 0 1 0"/></filter>
   <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   <filter id="bigGlow" x="-20%" y="-40%" width="140%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
   <filter id="far"><feGaussianBlur stdDeviation=".8"/></filter>
@@ -148,32 +132,15 @@ def header():
 {wyvern("M1050,70 C850,20 700,110 520,60 C380,25 200,90 -80,40", 11, -3, .45, True, .55, True)}
 {wyvern("M-80,30 C150,90 300,10 480,40 C650,70 800,0 1080,30", 13, -8, .38, False, .45, True)}
 
-<!-- dragon: body = animated WebP (Codex keyframes + optical-flow in-betweens), fire with heat-haze + flicker -->
-<g style="mix-blend-mode:screen">
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/>
-    <image href="{b64('dragon-body.webp','image/webp')}" x="{ix}" y="{iy}" width="{iw*0.6:.0f}" height="{ih}" mask="url(#mBody)"/>
-    <g mask="url(#mFire)"><use href="#dragon" filter="url(#haze)"/></g>
-    <g mask="url(#mFire)" opacity=".3"><use href="#dragon" filter="url(#hot)"/>
-      <animate attributeName="opacity" values=".15;.5;.25;.6;.2;.45;.15" dur="1.9s" repeatCount="indefinite"/>
-    </g>
-    <circle cx="{mouth[0]}" cy="{mouth[1]}" r="46" fill="url(#mouthGlow)">
-      <animate attributeName="r" values="38;58;44;62;38" dur="2.2s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values=".55;1;.7;.95;.55" dur="2.2s" repeatCount="indefinite"/>
-    </circle>
-  </g>
-</g>
+<!-- dragon: Codex full-body art bent along its spine and flown around a looping path (scripts: rig.py) -->
+<image href="{b64('dragon-fly.webp','image/webp')}" width="{W}" height="{H}" style="mix-blend-mode:screen"/>
 
 <!-- embers -->
 <g filter="url(#glow)">
-{embers(rng, 46, fire_spawn)}
+{embers(rng, 30, sky_spawn, rise=(40, 120), size=(.6, 2), dur=(2, 4.5))}
 {embers(rng, 18, floor_spawn, rise=(90, 220), size=(.7, 2), dur=(3, 6))}
 {embers(rng, 10, text_spawn, rise=(30, 70), size=(.5, 1.4), dur=(2.5, 4.5))}
 </g>
-
-<!-- near wyverns -->
-{wyvern("M-120,300 C120,330 260,250 330,300 C420,360 520,250 640,320 C760,380 900,300 1120,330", 7.5, -2, .9)}
-{wyvern("M1100,20 C900,120 820,-10 680,30 C560,60 520,0 440,-60", 6, -4.2, .7, True)}
 
 <rect width="{W}" height="{H}" fill="url(#scan)"/>
 
@@ -312,7 +279,7 @@ def about():
 
 LANG = {"Python": "#3572A5", "JavaScript": "#F1E05A", "TypeScript": "#3178C6", "Jupyter Notebook": "#DA5B0B"}
 STAR = "M0,-7 L2.1,-2.2 L7,-2.2 L3,1 L4.4,6 L0,3.1 L-4.4,6 L-3,1 L-7,-2.2 L-2.1,-2.2 Z"
-FLAME = "M0,-30 C10,-16 18,-8 14,6 C11,16 4,20 0,20 C-4,20 -11,16 -14,6 C-17,-4 -10,-10 -6,-18 C-4,-10 -2,-6 2,-4 C4,-12 2,-20 0,-30 Z"
+TORCH = b64("torch.webp", "image/webp")  # WebGL torch flame, shared by all cards
 
 
 def card(title, desc, lang, stars, seed):
@@ -330,56 +297,26 @@ def card(title, desc, lang, stars, seed):
 <circle cx="30" cy="127" r="6" fill="{LANG[lang]}"/>
 <text class="t" x="44" y="131" font-size="13" fill="#E9C9B2">{lang}</text>
 {star}
-<g transform="translate({W-44} 48)" filter="url(#glow)">
-  <path d="{FLAME}" fill="url(#flame)">
-    <animateTransform attributeName="transform" type="scale" values="1 1;1.06 .92;.95 1.08;1 1" dur="1.3s" repeatCount="indefinite"/></path>
-  <path d="{FLAME}" fill="#FFF1B8" transform="translate(0 8) scale(.45)" opacity=".9">
-    <animate attributeName="opacity" values=".9;.5;1;.9" dur=".9s" repeatCount="indefinite"/></path>
-</g>
-<g filter="url(#glow)">{embers(rng, 7, lambda r: (W - 44 + r.uniform(-12, 12), 48 + r.uniform(-20, 0)), rise=(20, 45), drift=(-10, 10), size=(.6, 1.6), dur=(1.2, 2.4))}</g>
+<image href="{TORCH}" x="{W-76}" y="2" width="63" height="84"/>
+<g filter="url(#glow)">{embers(rng, 7, lambda r: (W - 44 + r.uniform(-10, 10), 30 + r.uniform(-14, 4)), rise=(20, 45), drift=(-10, 10), size=(.6, 1.6), dur=(1.2, 2.4))}</g>
 """
-    defs = (f'<linearGradient id="title" x1="0" x2="1"><stop offset="0" stop-color="#FFF6C9"/><stop offset=".6" stop-color="{GOLD}"/><stop offset="1" stop-color="{ORANGE}"/></linearGradient>'
-            f'<linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="{RED}"/><stop offset=".5" stop-color="{ORANGE}"/><stop offset="1" stop-color="{GOLD}"/></linearGradient>')
+    defs = (f'<linearGradient id="title" x1="0" x2="1"><stop offset="0" stop-color="#FFF6C9"/><stop offset=".6" stop-color="{GOLD}"/><stop offset="1" stop-color="{ORANGE}"/></linearGradient>')
     return svg_doc(W, H, title, body, defs)
 
 
 def footer():
     rng = random.Random(5)
-    W, H = 1000, 130
-
-    def tongues(n, color, hmin, hmax, wmin, wmax):
-        out = []
-        for k in range(n):
-            x = (k + rng.uniform(-.3, .3)) * W / (n - 1)
-            sx, sy = rng.uniform(wmin, wmax), rng.uniform(hmin, hmax)
-            d = rng.uniform(.9, 1.8)
-            out.append(
-                f'<g transform="translate({x:.0f} {H})"><g><path d="{FLAME}" transform="translate(0 -20)" fill="{color}"/>'
-                f'<animateTransform attributeName="transform" type="scale" values="{sx:.2f} {sy:.2f};{sx*.85:.2f} {sy*1.3:.2f};{sx*1.05:.2f} {sy*.8:.2f};{sx:.2f} {sy:.2f}" '
-                f'dur="{d:.2f}s" begin="-{rng.uniform(0, 2):.2f}s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1;.4 0 .6 1"/></g></g>')
-        return "".join(out)
-
-    body = f"""<g mask="url(#edges)">
-<rect y="{H-40}" width="{W}" height="40" fill="url(#base)"/>
-<g filter="url(#soft)" opacity=".85">{tongues(26, RED, 1.3, 2.2, 1.6, 2.4)}</g>
-<g filter="url(#soft2)">{tongues(34, "url(#fl)", 1.0, 1.9, 1.1, 1.6)}</g>
-<g opacity=".6" filter="url(#soft2)">{tongues(40, "#FFE9A0", .35, .75, .5, .8)}</g>
-<g filter="url(#glow)">{embers(rng, 34, lambda r: (r.uniform(0, W), H - r.uniform(20, 60)), rise=(30, 70), dur=(1.4, 3))}</g>
-</g>
-<text class="mono" x="{W/2}" y="26" text-anchor="middle" font-size="13" letter-spacing="3" fill="#F08A2C">THANKS FOR STOPPING BY — KEEP THE FIRE BURNING
+    W, H = 1000, 150
+    body = f"""<image href="{b64('fire.webp', 'image/webp')}" width="{W}" height="{H}"/>
+<g filter="url(#glow)">{embers(rng, 34, lambda r: (r.uniform(120, W - 120), H - r.uniform(30, 70)), rise=(40, 100), dur=(1.4, 3))}</g>
+<text class="mono" x="{W/2}" y="24" text-anchor="middle" font-size="13" letter-spacing="3" fill="#F08A2C">THANKS FOR STOPPING BY — KEEP THE FIRE BURNING
   <animate attributeName="opacity" values=".6;1;.6" dur="3s" repeatCount="indefinite"/></text>"""
-    defs = (f'<linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{ORANGE}"/><stop offset=".6" stop-color="{AMBER}"/><stop offset="1" stop-color="{GOLD}"/></linearGradient>'
-            f'<linearGradient id="base" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{ORANGE}" stop-opacity="0"/><stop offset="1" stop-color="{GOLD}" stop-opacity=".8"/></linearGradient>'
-            '<linearGradient id="edgeG" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".15" stop-color="#fff"/><stop offset=".85" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
-            f'<mask id="edges" maskUnits="userSpaceOnUse" x="0" y="0" width="{W}" height="{H}"><rect width="{W}" height="{H}" fill="url(#edgeG)"/></mask>'
-            '<filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>'
-            '<filter id="soft2" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter>')
-    return svg_doc(W, H, "Footer", body, defs)
+    return svg_doc(W, H, "Footer", body)
 
 
 PROJECTS = {
     "ai-test": ("AI-TEST", ["Self-hosted quiz app for AI exam prep:", "600 questions, answers, explanations."], "JavaScript", 15),
-    "ai-log-hook": ("AI-Log-Hook", ["Git pre-push gate that makes teams log", "their AI usage. Zero dependencies."], "Python", 10),
+    "openhunter": ("OpenHunterAI", ["Local-first AI red team for web, API", "and LLM app security. Agent skills."], "TypeScript", 335),
     "scamgraph": ("ScamGraph-Expert-Agents", ["Graph + LLM agents that flag risky", "transfers and assist fraud investigation."], "Jupyter Notebook", 0),
     "di-san": ("Di-San-Viet-Nam", ["Vietnamese heritage explorer: 3D models,", "interactive map, AI storytelling."], "TypeScript", 0),
 }
